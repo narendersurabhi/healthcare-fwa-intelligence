@@ -1,38 +1,33 @@
-# Program Intelligence — FWA Detection (Pre/Post-Pay)
+# Healthcare FWA Intelligence — End-to-End Example (Pre/Post-Pay)
 
 Problem
-Detect fraud, waste, and abuse in medical, dental, vision, and pharmacy claims. Reduce false positives and time-to-insight.
+Detect fraud, waste, and abuse in medical, dental, vision, and pharmacy claims while limiting false positives.
 
 Approach
-Hybrid rules + ML + GenAI:
-- Feature store from PySpark jobs over claims, providers, members, networks.
-- Supervised models (XGBoost, LR) + unsupervised (IsolationForest, LOF).
-- Network features for provider–member collusion.
-- GenAI “investigator brief” using RAG over evidence.
+Hybrid rules + ML + GenAI (synthetic only):
+- Feature store with PySpark over claims, providers, members, and simple network joins.
+- Supervised models (XGBoost, Logistic Regression) + unsupervised (IsolationForest/LOF).
+- Lightweight network features for potential collusion patterns.
+- RAG-based “investigator brief” over retrieved evidence.
 
-Data (synthetic)
-No PHI. Use `data/synthetic_generator.py` to create claim, provider, member tables with label noise.
+Data
+Synthetic only. Use `data/synthetic_generator.py`. No PHI/PII.
 
 Key Features
-- Temporal: rolling provider velocity, after-hours rates, reversal ratios.
-- Network: shared addresses, device IDs, referral triangles.
-- Billing: upcoding deltas, unbundling, modifier misuse.
-- Member: doctor-shopping, distance anomalies.
+- Temporal velocities, after-hours rates, reversal ratios.
+- Network co-occurrence signals.
+- Billing deltas for upcoding/unbundling patterns.
+- Member utilization anomalies.
 
 Models
-- Binary classifier for pre-pay screening.
+- Binary classifier for pre-pay triage.
 - Unsupervised anomaly score for discovery.
-- Calibrated thresholds by line-of-business.
+- Calibrated thresholds by line of business.
 
-Results (sample)
-- Reviewer efficiency: +35% time savings.
-- Prevented improper payments: $15M+ simulated annualized.
-- Availability target: 99.9% for online scoring.
-
-What’s next
-- Clarify bias/drift checks.
-- Human-in-the-loop feedback store.
-- Cost per detection dashboards.
+Results (demo)
+- Reviewer time reduced in simulations.
+- Improper payment reduction estimated on synthetic baselines.
+- Target availability for online scoring: 99.9%.
 
 Quickstart
 ```bash
