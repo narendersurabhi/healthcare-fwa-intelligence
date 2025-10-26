@@ -35,3 +35,35 @@ python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 python data/synthetic_generator.py
 jupyter lab
+````
+
+Train
+
+```bash
+python src/models/train.py --config configs/params.yaml
+```
+
+Batch Inference
+
+```bash
+python src/inference/batch.py --input data/synth_claims.parquet --out out/preds.parquet
+```
+
+Repo layout
+
+```
+data/               # synthetic data scripts
+notebooks/          # 01_eda, 02_feature_eng, 03_train_eval
+src/features/
+src/models/         # train.py, evaluate.py
+src/inference/      # batch.py, serve_stub.py
+configs/            # params.yaml
+model-card.md
+docker/inference.Dockerfile
+.github/workflows/ci.yml
+```
+
+Tech
+Python, PySpark, Pandas, XGBoost, scikit-learn, MLflow, Docker
+
+> Disclaimer: Educational code and synthetic data only. No employer code, data, or confidential methods.
